@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+      .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+      }
+      h4 {
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      p {
+        text-align: justify;
+        margin-bottom: 15px;
+      }
+      p b {
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg bg-dark shadow-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="{{ url_for('static', filename='img.jpg') }}"
+            alt="Logo"
+            class="rounded-circle me-3"
+            style="width: 50px; height: 50px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);"
+          />
+          <span class="text-light fs-3 fw-bold">Disease Prediction</span>
+        </a>
+        <button
+          class="navbar-toggler text-light"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto me-4 mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="http://127.0.0.1:5000/#" style="transition: all 0.3s;">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill active" href="/about" style="transition: all 0.3s;">
+                About
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/contact" style="transition: all 0.3s;">
+                Contact
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/developer" style="transition: all 0.3s;">
+                Developer
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/blog" style="transition: all 0.3s;">
+                Nearby Doctors
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h4>About Us</h4>
+      <p>
+        Welcome to <b>Disease Prediction</b>, your trusted platform for predicting potential diseases based on symptoms. Our mission is to empower individuals by providing insightful health information using advanced machine learning algorithms.
+      </p>
+      
+      <h4>Our Vision</h4>
+      <p>
+        We aim to revolutionize healthcare with innovative technologies that make early disease prediction accessible and accurate for everyone. By leveraging AI and data-driven insights, we help users understand their health better and take timely preventive measures.
+      </p>
+
+      <h4>Our Technology</h4>
+      <p>
+        Our platform is built using advanced machine learning models, including decision trees, random forests, and logistic regression techniques. We continuously improve our algorithms to ensure accurate and meaningful predictions for our users.
+      </p>
+
+      <h4>Our Team</h4>
+      <p>
+        Our dedicated team of data scientists, healthcare professionals, and developers are committed to building a secure, user-friendly platform that empowers individuals to make informed health decisions.
+      </p>
+
+      <h4>Why Choose Us?</h4>
+      <p>
+        With accurate predictions, a user-friendly interface, and a commitment to data security, our platform stands out as a reliable health companion for early diagnosis and preventive care.
+      </p>
+
+      <h4>Contact Us</h4>
+      <p>
+        Got questions? Feel free to visit our <b>Contact Us</b> page for more information.
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>

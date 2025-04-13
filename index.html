@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Disease Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+     <style>
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-top: 0;
+        margin-left: 2px;
+      }
+
+      .myimg {
+        width: 50px;
+        height: 50px;
+        border: 2px solid black;
+        border-radius: 25px;
+      }
+
+      
+
+    </style>
+  </head>
+  
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-dark shadow-lg">
+        <div class="container-fluid">
+          <!-- Logo and Brand Name -->
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            <img
+              src="{{ url_for('static', filename='img.jpg') }}"
+              alt="Logo"
+              class="rounded-circle me-3"
+              style="width: 50px; height: 50px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);"
+            />
+            <span class="text-light fs-3 fw-bold">Disease Prediction</span>
+          </a>
+          <button
+            class="navbar-toggler text-light"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto me-4 mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill active" href="#" style="transition: all 0.3s;">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/about" style="transition: all 0.3s;">
+                  About
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/contact" style="transition: all 0.3s;">
+                  Contact
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/developer" style="transition: all 0.3s;">
+                  Developer
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/blog" style="transition: all 0.3s;">
+                  Nearby Doctors
+                </a>
+              </li>
+            </ul>
+            <form class="d-flex align-items-center" role="search">
+              <input
+                class="form-control me-2 rounded-pill border-0 shadow-sm"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                style="width: 300px;"
+              />
+              <button
+                class="btn btn-success rounded-pill px-4 shadow-sm"
+                type="submit"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      
+      <style>
+        .navbar {
+          background: linear-gradient(135deg, #212529, #343a40);
+        }
+      
+        .nav-link {
+          color: #f8f9fa;
+          transition: background-color 0.3s, color 0.3s;
+        }
+      
+        .nav-link:hover {
+          background-color: #00d1b2;
+          color: #fff;
+          text-decoration: none;
+        }
+      
+        .btn-success {
+          background-color: #28a745;
+          border: none;
+        }
+      
+        .btn-success:hover {
+          background-color: #218838;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+      
+        .form-control {
+          background-color: #f8f9fa;
+          color: #343a40;
+        }
+      
+        .form-control:focus {
+          outline: none;
+          box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        }
+      
+        .navbar-brand img {
+          animation: float 2s infinite;
+        }
+      
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+      </style>
+      
+      
+
+<!-- Main Form of Page -->
+<h1 class="mt-4 my-4 text-center text-green">Smart Diagnosis: Predicting Diseases from Symptoms</h1>
+<div class="container my-4 mt-4" style="background: black; color: white; border-radius: 15px; padding: 40px;">
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <label for="symptoms">Select Symptoms:</label>
+            <!-- Removed incorrect comma from the input tag -->
+            <input 
+                type="text" 
+                class="form-control" 
+                id="symptoms" 
+                name="symptoms" 
+                placeholder="Type symptoms such as itching, sleeping, aching, etc."
+            >
+        </div>
+        <br>
+        <button 
+            type="button" 
+            id="startSpeechRecognition" 
+            class="btn btn-primary" 
+            style="margin-left: 3px; border: 1px solid white; border-radius: 20px;"
+        >
+            Start Speech Recognition
+        </button>
+        <br>
+
+        <!-- Display the transcribed text here -->
+        <div name="mysysms" id="transcription"></div>
+
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <br>
+
+        <button 
+            type="submit" 
+            class="btn btn-danger btn-lg" 
+            style="width: 100%; padding: 14px; margin-bottom: 5px;"
+        >
+            Predict
+        </button>
+    </form>
+</div>
+
+{% if predicted_disease %}
+
+<!-- Results -->
+<h1 class="text-center my-4 mt-4">Our AI System Results</h1>
+<div class="container">
+
+    <div class="result-container">
+        <!-- Buttons to toggle display -->
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F39334;color:black;">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#268AF3 ;color:black;">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F371F9 ;color:black;">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:#F8576F ;color:black;">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#99F741 ;color:black;">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#E5E23D;color:black;">Diets</button>
+    </div>
+</div>
+
+{% endif %}
+
+<!-- Disease Modal -->
+<div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #020606; color: white;">
+                <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body" style="background-color: #f8f9fa;"> <!-- Use a valid background color -->
+                <p>{{ predicted_disease }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Description Modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Precaution Modal -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Modal -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px;">
+      <select id="diseaseSelect" style="padding: 8px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+          <option value="" disabled selected>Select a disease</option>
+      </select>
+      <button id="generateReport" style="
+          background-color: #007bff; 
+          color: white; 
+          border: none; 
+          padding: 10px 20px; 
+          font-size: 16px; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      ">
+          Generate Report
+      </button>
+      <button id="downloadPDF" style="
+          background-color: #007bff; 
+          color: white; 
+          border: none; 
+          padding: 10px 20px; 
+          font-size: 16px; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+          display: none; /* Hidden initially */
+      ">
+          Download PDF
+      </button>
+  </div>
+  
+  <div id="reportOutput" style="
+      white-space: pre-line; 
+      margin-top: 20px; 
+      padding: 15px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+      background-color: #f9f9f9; 
+      font-size: 14px;
+      display: none; /* Hide initially */
+  "></div>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let diseases = [
+    {
+        name: "Dengue",
+        symptoms: ["fever", "headache", "joint pain", "rash", "fatigue"],
+        description: "Dengue fever is a mosquito-borne illness causing high fever, severe joint pain, and skin rashes.",
+        precaution: "Use mosquito nets, Wear full-sleeved clothes, Avoid stagnant water.",
+        medication: "Pain relievers, Hydration therapy, Rest.",
+        workout: "Avoid strenuous exercise, Focus on rest.",
+        diet: "Drink plenty of fluids, Eat papaya leaf extract."
+    },
+    {
+        name: "Malaria",
+        symptoms: ["fever", "chills", "sweating", "nausea", "muscle pain"],
+        description: "Malaria is a mosquito-borne disease caused by Plasmodium parasites, leading to fever and chills.",
+        precaution: "Use insect repellents, Sleep under a net, Avoid mosquito-prone areas.",
+        medication: "Antimalarial drugs, IV fluids for severe cases.",
+        workout: "Light stretching, Avoid overexertion.",
+        diet: "Eat iron-rich foods, Stay hydrated."
+    },
+    {
+        name: "COVID-19",
+        symptoms: ["fever", "cough", "fatigue", "shortness of breath", "loss of taste"],
+        description: "COVID-19 is a viral infection causing respiratory symptoms and fever.",
+        precaution: "Wear masks, Social distancing, Wash hands regularly.",
+        medication: "Supportive care, Oxygen therapy in severe cases.",
+        workout: "Light breathing exercises, Avoid heavy workouts.",
+        diet: "Vitamin C-rich foods, Hydration, Balanced diet."
+    },
+    {
+        name: "Typhoid",
+        symptoms: ["fever", "abdominal pain", "weakness", "loss of appetite", "constipation"],
+        description: "Typhoid fever is caused by Salmonella bacteria, leading to prolonged fever and digestive issues.",
+        precaution: "Drink boiled water, Wash hands frequently, Eat home-cooked meals.",
+        medication: "Antibiotics, Fever reducers, Oral rehydration.",
+        workout: "Minimal activity, Rest as much as possible.",
+        diet: "Soft, bland foods; Hydration is key."
+    },
+    {
+        name: "Pneumonia",
+        symptoms: ["fever", "cough", "chest pain", "shortness of breath", "fatigue"],
+        description: "Pneumonia is a lung infection that causes inflammation in the air sacs.",
+        precaution: "Avoid smoking, Get vaccinated, Maintain good hygiene.",
+        medication: "Antibiotics (for bacterial pneumonia), Cough syrups, Pain relievers.",
+        workout: "Breathing exercises, Walking if energy allows.",
+        diet: "Soups, Warm fluids, High-protein diet."
+    },
+    {
+        name: "Tuberculosis (TB)",
+        symptoms: ["cough", "night sweats", "weight loss", "chest pain", "fatigue"],
+        description: "Tuberculosis is a bacterial infection affecting the lungs and can spread to other organs.",
+        precaution: "Get vaccinated, Cover mouth while coughing, Ensure proper ventilation.",
+        medication: "Long-term antibiotics, Regular checkups, Avoid crowded places.",
+        workout: "Moderate exercise, Deep breathing techniques.",
+        diet: "Protein-rich foods, Leafy greens, Dairy products."
+    },
+    {
+        name: "Asthma",
+        symptoms: ["wheezing", "cough", "shortness of breath", "chest tightness"],
+        description: "Asthma is a chronic lung disease causing inflammation and narrowing of airways.",
+        precaution: "Avoid allergens, Use inhalers, Maintain indoor air quality.",
+        medication: "Bronchodilators, Corticosteroids, Anti-inflammatory drugs.",
+        workout: "Yoga, Breathing exercises, Avoid heavy workouts.",
+        diet: "Omega-3 rich foods, Warm fluids, Avoid dairy (if allergic)."
+    },
+    {
+        name: "Fungal Infection",
+        symptoms: ["itching", "rash", "scaly skin", "redness"],
+        description: "A fungal infection is caused by fungi affecting the skin, nails, or internal organs.",
+        precaution: "Keep skin dry, Use antifungal creams, Maintain hygiene.",
+        medication: "Antifungal pills, Topical creams, Avoid humid environments.",
+        workout: "Light exercises, Yoga, Avoid excessive sweating.",
+        diet: "Increase probiotics, Eat garlic, Avoid sugary foods."
+    },
+    {
+        name: "Chickenpox",
+        symptoms: ["rash", "fever", "itching", "tiredness", "body aches"],
+        description: "Chickenpox is a viral infection causing itchy skin rashes and flu-like symptoms.",
+        precaution: "Get vaccinated, Avoid contact with infected people, Maintain hygiene.",
+        medication: "Antiviral drugs (in severe cases), Calamine lotion, Fever reducers.",
+        workout: "Rest, Gentle stretching if needed.",
+        diet: "Hydrating foods, Soft diet, Avoid spicy foods."
+    },
+    {
+        name: "Common Cold",
+        symptoms: ["runny nose", "sore throat", "sneezing", "cough", "fatigue"],
+        description: "The common cold is a viral infection affecting the nose and throat.",
+        precaution: "Wash hands frequently, Stay warm, Avoid cold drinks.",
+        medication: "Decongestants, Pain relievers, Cough syrups.",
+        workout: "Light stretching, Breathing exercises.",
+        diet: "Warm soups, Ginger tea, Honey and lemon drinks."
+    }
+];
+
+  
+      // Populate the dropdown with disease names
+      let diseaseSelect = document.getElementById("diseaseSelect");
+      diseases.forEach(disease => {
+          let option = document.createElement("option");
+          option.value = disease.name;
+          option.textContent = disease.name;
+          diseaseSelect.appendChild(option);
+      });
+  
+      document.getElementById("generateReport").addEventListener("click", function () {
+          let selectedDiseaseName = diseaseSelect.value;
+          if (!selectedDiseaseName) {
+              alert("Please select a disease.");
+              return;
+          }
+  
+          let selectedDisease = diseases.find(d => d.name === selectedDiseaseName);
+  
+          let reportContent = `
+              <div style="
+                  background-color: #e6f7ff;
+                  padding: 15px;
+                  border-left: 5px solid #007bff;
+                  border-radius: 5px;
+                  font-family: Arial, sans-serif;
+                  line-height: 1.6;
+              ">
+                  <h2 style="color: #007bff; margin-bottom: 10px;">${selectedDisease.name}</h2>
+                  <p><strong>Description:</strong> ${selectedDisease.description}</p>
+                  <p><strong>Precautions:</strong> ${selectedDisease.precaution}</p>
+                  <p><strong>Medications:</strong> ${selectedDisease.medication}</p>
+                  <p><strong>Workouts:</strong> ${selectedDisease.workout}</p>
+                  <p><strong>Diet:</strong> ${selectedDisease.diet}</p>
+              </div>
+          `;
+  
+          let reportOutput = document.getElementById("reportOutput");
+          reportOutput.innerHTML = reportContent;
+          reportOutput.style.display = "block"; // Show report section
+          document.getElementById("downloadPDF").style.display = "block"; // Show download button
+      });
+  
+      document.getElementById("downloadPDF").addEventListener("click", function () {
+          const { jsPDF } = window.jspdf;
+          let doc = new jsPDF();
+  
+          let textContent = document.getElementById("reportOutput").innerText;
+          doc.text(textContent, 10, 10);
+          doc.save("Disease_Report.pdf");
+      });
+  });
+  </script>
+  
+
+    <div style="max-width: 1300px; background: #000; padding: 5px 50px; border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); color: #fff; margin: 5px auto; 
+            text-align: center; font-family: Arial, sans-serif;">
+    <h2 style="color: #ff4d4d; font-size: 22px; margin-bottom: 3px;">Disclaimer</h2>
+    <p style="font-size: 14px; line-height: 1.2; margin: 3px 0;">
+        This system is for <b>informational purposes only</b> and <b>does not replace</b> professional medical advice.
+    </p>
+    <p style="font-size: 14px; line-height: 1.2; margin: 3px 0;">
+        Consult a <b>qualified medical professional</b> for any health concerns. Do not rely solely on this system.
+    </p>
+    <p style="font-size: 16px; font-weight: bold; color: #ff4d4d; margin: 5px 0;">
+        In case of a medical emergency, seek immediate professional assistance.
+    </p>
+</div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+          <div class="row">
+            <!-- About Section -->
+            <div class="col-md-4">
+              <h5 class="fw-bold">Disease Prediction</h5>
+              <p class="small">
+                Your trusted companion in health monitoring and early detection.
+                Powered by cutting-edge AI and medical insights.
+              </p>
+            </div>
+            <!-- Quick Links -->
+            <div class="col-md-4">
+              <h5 class="fw-bold">Quick Links</h5>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                <li><a href="/about" class="text-light text-decoration-none">About</a></li>
+                <li><a href="/contact" class="text-light text-decoration-none">Contact</a></li>
+                <li><a href="/developer" class="text-light text-decoration-none">Developer</a></li>
+                <li><a href="/blog" class="text-light text-decoration-none">Nearby Doctors</a></li>
+              </ul>
+            </div>
+            <!-- Contact Section -->
+            <div class="col-md-4">
+              <h5 class="fw-bold">Contact Us</h5>
+              <p class="small mb-0"><i class="bi bi-envelope-fill"></i> support@diseaseprediction.com</p>
+              <p class="small mb-0"><i class="bi bi-telephone-fill"></i> +91 0123456789</p>
+              <p class="small"><i class="bi bi-geo-alt-fill"></i> SSPMCOE Kankavali</p>
+              <div>
+                <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-5"></i></a>
+                <a href="#" class="text-light me-3"><i class="bi bi-twitter fs-5"></i></a>
+                <a href="#" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Copyright Section -->
+          <div class="text-center mt-4 small">
+            &copy; 2025 Disease Prediction. All rights reserved.
+          </div>
+        </div>
+      </footer>
+      
+      <style>
+        footer {
+          background: linear-gradient(135deg, #212529, #343a40);
+        }
+      
+        footer h5 {
+          color: #00d1b2;
+        }
+      
+        footer a:hover {
+          text-decoration: underline;
+          color: #00d1b2 !important;
+        }
+      
+        footer .bi {
+          transition: color 0.3s ease;
+        }
+      
+        footer .bi:hover {
+          color: #00d1b2;
+        }
+      </style>
+      
+
+        <script>
+    const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
+    const transcriptionDiv = document.getElementById('transcription');
+
+    startSpeechRecognitionButton.addEventListener('click', startSpeechRecognition);
+
+    function startSpeechRecognition() {
+        const recognition = new webkitSpeechRecognition(); // Use webkitSpeechRecognition for compatibility
+
+        recognition.lang = 'en-US'; // Set the language for recognition
+
+        recognition.onresult = function (event) {
+            const result = event.results[0][0].transcript;
+            transcriptionDiv.textContent = result;
+        };
+
+        recognition.onend = function () {
+            console.log('Speech recognition ended.');
+        };
+
+        recognition.start();
+    }
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+
+</html>

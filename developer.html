@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meet the Developers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+      .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+      }
+      h6 {
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      h5 {
+        color: #333;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+      p {
+        text-align: justify;
+        margin-bottom: 20px;
+      }
+      .highlight {
+        color: #007bff;
+        font-weight: bold;
+      }
+      .back-btn {
+        margin-top: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg bg-dark shadow-lg">
+      <div class="container-fluid">
+        <!-- Logo and Brand Name -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="{{ url_for('static', filename='img.jpg') }}"
+            alt="Logo"
+            class="rounded-circle me-3"
+            style="width: 50px; height: 50px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);"
+          />
+          <span class="text-light fs-3 fw-bold">Disease Prediction</span>
+        </a>
+        <button
+          class="navbar-toggler text-light"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto me-4 mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill active" href="http://127.0.0.1:5000/#" style="transition: all 0.3s;">
+                Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/about" style="transition: all 0.3s;">
+                About
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/contact" style="transition: all 0.3s;">
+                Contact
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/developer" style="transition: all 0.3s;">
+                Developer
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light fw-semibold px-3 py-2 rounded-pill" href="/blog" style="transition: all 0.3s;">
+                Nearby Doctors
+              </a>
+            </li>
+          </ul>
+          <form class="d-flex align-items-center" role="search">
+            <input
+              class="form-control me-2 rounded-pill border-0 shadow-sm"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              style="width: 300px;"
+            />
+            <button
+              class="btn btn-success rounded-pill px-4 shadow-sm"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    
+    <style>
+      .navbar {
+        background: linear-gradient(135deg, #212529, #343a40);
+      }
+    
+      .nav-link {
+        color: #f8f9fa;
+        transition: background-color 0.3s, color 0.3s;
+      }
+    
+      .nav-link:hover {
+        background-color: #00d1b2;
+        color: #fff;
+        text-decoration: none;
+      }
+    
+      .btn-success {
+        background-color: #28a745;
+        border: none;
+      }
+    
+      .btn-success:hover {
+        background-color: #218838;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+    
+      .form-control {
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+    
+      .form-control:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+      }
+    
+      .navbar-brand img {
+        animation: float 2s infinite;
+      }
+    
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+
+    <div class="container">
+      <h6 class="text-center">Nishant Narkar, Pranav Dabholkar, Shejwal Gadekar, Varad Sawant: Your AI & ML Engineers</h6>
+      <h5>Meet the Developers</h5>
+      <p>
+        Hello, we are a team of passionate <span class="highlight">AI and Machine Learning Engineers</span> with over 2 years of experience in the field. We are dedicated to harnessing the power of technology to make a positive impact on people's lives. Allow us to share a bit about our journey in the world of artificial intelligence and machine learning.
+      </p>
+      
+      <h5>Our Expertise</h5>
+      <p>
+        With a strong academic background in computer science and a deep fascination for AI and ML, we embarked on a journey that has taken us across the globe, working on diverse and innovative projects. Over the years, we had the privilege of collaborating on international projects that have pushed the boundaries of what's possible in AI and ML.
+      </p>
+      
+      <h5>A Commitment to Excellence</h5>
+      <p>
+        Our work is driven by a commitment to excellence and a belief that technology should be accessible and beneficial to everyone. Whether it's developing predictive models, creating intelligent algorithms, or designing user-friendly interfaces, we strive for solutions that are both cutting-edge and user-centric.
+      </p>
+      
+      <h5>Passion for Health Tech</h5>
+      <p>
+        The development of <span class="highlight">diseaseprediction.in</span> represents a convergence of our passion for AI and our dedication to improving healthcare accessibility. We believe that AI has the potential to transform the way we approach healthcare, making it more personalized and informative. This platform is a testament to that vision.
+      </p>
+      
+      <h5>Join Us on this Journey</h5>
+      <p>
+        We invite you to explore <span class="highlight">diseaseprediction.in</span> and experience firsthand the fusion of AI and healthcare. Together, we can empower individuals with knowledge, promote well-being, and contribute to a brighter and healthier future.
+      </p>
+      
+      <div class="back-btn">
+        <a href="http://127.0.0.1:5000/predict" class="btn btn-primary">Back to Home</a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>
